@@ -31,10 +31,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: appScaffoldBackgroundColor,
         primaryColor: appPrimaryColor,
-        textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: appTextColor,
-          displayColor: appTextColor,
-        )
+          textTheme: Theme.of(context).textTheme.apply(
+            bodyColor: appTextColor,
+            displayColor: appTextColor,
+            fontFamily: 'SFProDisplay',
+          )
       ),
       home: const MoviesHome()
     );

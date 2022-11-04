@@ -42,7 +42,9 @@ dependencies:
   flutter_bloc: ^8.1.1
   # Comparing instances (State/Events handling)
   equatable: ^2.0.5
+  # Logging
   fimber: ^0.6.6
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -66,16 +68,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+  assets:
+    - assets/images/img-logo.png
+    - assets/images/star_black_24dp.svg
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
@@ -96,3 +91,18 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: SFProDisplay
+      fonts:
+        - asset: assets/fonts/SF-Pro-Display-Regular.otf
+          weight: 400
+        - asset: assets/fonts/SF-Pro-Display-RegularItalic.otf
+          style: italic
+        - asset: assets/fonts/SF-Pro-Display-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/SF-Pro-Display-Light.otf
+          weight: 300
+    - family: SFPro
+      fonts:
+        - asset: assets/fonts/SF-Pro.ttf
+          weight: 400
