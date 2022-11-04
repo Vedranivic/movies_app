@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:movies_app/common/colors.dart';
+import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/ui/widgets/movies_list.dart';
 
 class MoviesHome extends StatefulWidget {
@@ -46,7 +47,7 @@ class _MoviesHomeState extends State<MoviesHome> {
               ),
               Text(
                 "Popular",
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22, height: 28/22),
+                style: titleTextStyle,
               ),
               Expanded(
                 child: Padding(

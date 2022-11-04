@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/common/styles.dart';
 
 import '../../common/colors.dart';
 
@@ -39,11 +40,7 @@ class _MovieListTileState extends State<MovieListTile> {
                 children: [
                   Text(
                     "Green Book",
-                    style: TextStyle(
-                      fontSize: 15,
-                      height: 20/15,
-                      fontWeight: FontWeight.w600
-                    ),
+                    style: itemTitleTextStyle,
                   ),
                   SizedBox(height: 4,),
                   Row(
@@ -52,10 +49,7 @@ class _MovieListTileState extends State<MovieListTile> {
                       SizedBox(width: 4,),
                       Text(
                         "8.2 / 10 IMDb",
-                        style: TextStyle(
-                          height: 16/12,
-                          fontSize: 12,
-                        ),
+                        style: ratingTextStyle,
                       )
                     ],
                   ),
@@ -75,11 +69,7 @@ class _MovieListTileState extends State<MovieListTile> {
                       ),
                       child: Text(
                         "Genre",
-                        style: TextStyle(
-                            fontFamily: 'SFPro',
-                            fontSize: 11,
-                            height: 13/11
-                        ),
+                        style: tagTextStyle,
                       ),
                     ))
                     ),
