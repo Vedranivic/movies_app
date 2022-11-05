@@ -8,9 +8,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/common/styles.dart';
 
 import '../../common/colors.dart';
+import '../../models/movie.dart';
 
 class MovieListTile extends StatefulWidget {
-  const MovieListTile({Key? key}) : super(key: key);
+  const MovieListTile(this.movie, {Key? key}) : super(key: key);
+  final Movie movie;
 
   @override
   State<MovieListTile> createState() => _MovieListTileState();
@@ -25,7 +27,7 @@ class _MovieListTileState extends State<MovieListTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            "https://images.pexels.com/photos/213780/pexels-photo-213780.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            "https://image.tmdb.org/t/p/w500" + widget.movie.posterPath!,
             fit: BoxFit.cover,
             height: 100,
             width: 100,
@@ -39,7 +41,7 @@ class _MovieListTileState extends State<MovieListTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Green Book",
+                    widget.movie.title!,
                     style: itemTitleTextStyle,
                   ),
                   SizedBox(height: 4,),
@@ -48,7 +50,7 @@ class _MovieListTileState extends State<MovieListTile> {
                       SvgPicture.asset("assets/images/star_black_24dp.svg"),
                       SizedBox(width: 4,),
                       Text(
-                        "8.2 / 10 IMDb",
+                        "${widget.movie.voteAverage.toString()} / 10 IMDb",
                         style: ratingTextStyle,
                       )
                     ],
@@ -58,7 +60,7 @@ class _MovieListTileState extends State<MovieListTile> {
                     direction: Axis.horizontal,
                     spacing: 4,
                     runSpacing: 4,
-                    children: List.generate(3, ((index) => Container(
+                    children: List.generate(widget.movie.genreIds!.length, ((index) => Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         color: primaryFaded,
@@ -68,7 +70,7 @@ class _MovieListTileState extends State<MovieListTile> {
                           horizontal: 8,
                       ),
                       child: Text(
-                        "Genre",
+                        widget.movie.genres![index].name!,
                         style: tagTextStyle,
                       ),
                     ))

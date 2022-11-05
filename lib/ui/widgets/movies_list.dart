@@ -6,9 +6,11 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/widgets/movie_list_tile.dart';
 
+import '../../models/movie.dart';
+
 class MoviesList extends StatefulWidget {
   const MoviesList(this.movies, {Key? key}) : super(key: key);
-  final List movies;
+  final List<Movie> movies;
 
   @override
   State<MoviesList> createState() => _MoviesListState();
@@ -23,7 +25,7 @@ class _MoviesListState extends State<MoviesList> {
           shrinkWrap: true,
           padding: EdgeInsets.zero,
           itemBuilder: (context, index){
-            return MovieListTile();
+            return MovieListTile(widget.movies[index]);
           }
       ),
     );

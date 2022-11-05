@@ -6,7 +6,9 @@
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/blocs/movies_bloc/movies_bloc.dart';
 import 'package:movies_app/common/colors.dart';
+import 'package:movies_app/resources/repositories/movies_repository.dart';
 import 'package:movies_app/ui/screens/movies_home.dart';
 
 import 'app_bloc_observer.dart';
@@ -37,7 +39,15 @@ class MyApp extends StatelessWidget {
             fontFamily: 'SFProDisplay',
           )
       ),
-      home: const MoviesHome()
+        home: RepositoryProvider(
+          create: (context) => MoviesRepository(),
+          child: BlocProvider(
+            create: (BuildContext context) => MoviesBloc(
+              moviesRepository: context.read<MoviesRepository>()
+            ),
+            child: const MoviesHome(),
+          ),
+        )
     );
   }
 }

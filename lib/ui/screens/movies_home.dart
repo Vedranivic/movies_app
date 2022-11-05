@@ -4,6 +4,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/blocs/movies_bloc/movies_bloc.dart';
 import 'package:movies_app/common/colors.dart';
 import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/ui/widgets/movies_list.dart';
@@ -16,16 +18,21 @@ class MoviesHome extends StatefulWidget {
 }
 
 class _MoviesHomeState extends State<MoviesHome> {
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<MoviesBloc>(context).add(MoviesStarted());
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(DefaultTextStyle.of(context).style.fontFamily);
-    print(Theme.of(context).textTheme.headline5!.fontFamily);
     return Scaffold(
       body: SafeArea(
         bottom: false,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 20
+              horizontal: 20
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +59,29 @@ class _MoviesHomeState extends State<MoviesHome> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 20),
-                  child: MoviesList(List.generate(10, (index) => index + 1)),
+                  child: BlocConsumer<MoviesBloc, MoviesState>(
+                    listener: (context, state) {
+                      if(state is MoviesFetchFailure){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                            )
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if(state is MoviesFetchInProgress){
+                        return Center(
+                          child: CircularProgressIndicator()
+                        );
+                      }
+                      if(state is MoviesFetchSuccess){
+                        return MoviesList(state.movies);
+                      } else {
+                        return MoviesList([]);
+                      }
+                    },
+                  ),
                 ),
               ),
             ],
