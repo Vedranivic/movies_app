@@ -5,9 +5,10 @@
 
 import '../../models/genre.dart';
 import '../../models/movie.dart';
+import '../../models/movie_detail.dart';
 
 abstract class DataProvider {
   Future<List<Movie>?> getMovies(int page);
   Future<List<Genre>?> getGenres();
-  // Future getDetails();
+  Future<MovieDetail?> getMovieDetails(int id);
 }

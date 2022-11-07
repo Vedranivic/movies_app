@@ -7,11 +7,13 @@ import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/common/colors.dart';
+import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/ui/widgets/bottom_loader.dart';
 import 'package:movies_app/ui/widgets/movie_list_tile.dart';
 
 import '../../blocs/movies_bloc/movies_bloc.dart';
 import '../../models/movie.dart';
+import '../screens/movie_details.dart';
 
 class MoviesList extends StatefulWidget {
   const MoviesList({required this.movies, this.hasReachedMaxPage = false, Key? key}) : super(key: key);
@@ -31,7 +33,6 @@ class _MoviesListState extends State<MoviesList> {
   @override
   void initState() {
     super.initState();
-    _logger.d("Init state");
     _scrollController.addListener(_onScroll);
   }
 
@@ -48,19 +49,34 @@ class _MoviesListState extends State<MoviesList> {
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
-        ListView.builder(
-            controller: _scrollController,
-            // Additional list item for bottom loader in pagination
-            itemCount: widget.hasReachedMaxPage
-                ? widget.movies.length
-                : widget.movies.length + 1,
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            itemBuilder: (context, index){
-              return index < widget.movies.length
-                ? MovieListTile(widget.movies[index])
-                : const BottomLoader();
-            }
+        RefreshIndicator(
+          onRefresh: _onListRefresh,
+          color: appScaffoldBackgroundColor,
+          backgroundColor: appPrimaryColor,
+          child: widget.movies.isEmpty
+            ? ListView(
+              children: const [
+                Center(
+                  child: Text(
+                    "No movies. Pull to refresh"
+                  ),
+                )
+              ],
+            )
+            : ListView.builder(
+              controller: _scrollController,
+              // Additional list item for bottom loader in pagination
+              itemCount: widget.hasReachedMaxPage
+                  ? widget.movies.length
+                  : widget.movies.length + 1,
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index){
+                return index < widget.movies.length
+                  ? MovieListTile(widget.movies[index])
+                  : const BottomLoader();
+              }
+          ),
         ),
         // ScrollToTopFab
         // Padding(
@@ -89,7 +105,7 @@ class _MoviesListState extends State<MoviesList> {
   void _onScroll() {
     if (_isBottom && !_isFetchRequested){
       _isFetchRequested = true;
-      BlocProvider.of<MoviesBloc>(context).add(MoviesFetchRequested());
+      BlocProvider.of<MoviesBloc>(context).add(MoviesFetchRequested(widget.movies));
     }
   }
 
@@ -106,5 +122,9 @@ class _MoviesListState extends State<MoviesList> {
         duration: const Duration(milliseconds: 400),
         curve: Curves.fastOutSlowIn
     );
+  }
+
+  Future<void> _onListRefresh() async {
+    BlocProvider.of<MoviesBloc>(context).add(MoviesRefresh());
   }
 }

@@ -24,3 +24,23 @@ const TextStyle tagTextStyle = TextStyle(
     fontSize: 11,
     height: 13/11
 );
+const TextStyle detailsTitleTextStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    height: 25/20
+);
+const TextStyle tagDetailsTextStyle = TextStyle(
+    fontFamily: 'SFPro',
+    fontSize: 12,
+    // height: 16/12
+);
+const TextStyle descLabelTextStyle = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 15,
+    height: 20/15
+);
+const TextStyle descriptionTextStyle = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+    height: 18/13
+);

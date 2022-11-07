@@ -3,6 +3,7 @@
  * This file is part of movies_app Flutter application project.
  */
 
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,13 +54,17 @@ class MyApp extends StatelessWidget {
         title: 'Movies App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            scaffoldBackgroundColor: appScaffoldBackgroundColor,
-            primaryColor: appPrimaryColor,
-            textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: appTextColor,
-              displayColor: appTextColor,
-              fontFamily: 'SFProDisplay',
-            )
+          scaffoldBackgroundColor: appScaffoldBackgroundColor,
+          progressIndicatorTheme: ProgressIndicatorTheme.of(context).copyWith(color: appPrimaryColor),
+          primaryColor: appPrimaryColor,
+          bottomSheetTheme: const BottomSheetThemeData(
+            backgroundColor: Colors.transparent,
+          ),
+          textTheme: Theme.of(context).textTheme.apply(
+            bodyColor: appTextColor,
+            displayColor: appTextColor,
+            fontFamily: 'SFProDisplay',
+          ),
         ),
         home: RepositoryProvider(
           create: (context) => MoviesRepository(

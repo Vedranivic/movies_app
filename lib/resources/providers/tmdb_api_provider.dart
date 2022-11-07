@@ -4,25 +4,56 @@
  */
 
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:fimber/fimber.dart';
+import 'package:movies_app/common/endpoints.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../models/genre.dart';
 import '../../models/movie.dart';
+import '../../models/movie_detail.dart';
 import '../interfaces/remote_provider.dart';
 
 /// Remote source provider - The Movie DB API
 class TMDBApiProvider implements RemoteProvider {
   final _logger = FimberLog((TMDBApiProvider).toString());
-
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: "https://api.themoviedb.org/3",
+      baseUrl: tmdbApiBaseUrl,
       queryParameters: {
-        "api_key" : "b8d7f76947904a011286dc732c55234e",
+        "api_key" : tmdbApiKey,
         "language" : "en_US"
-      }
-    )
+      },
+      connectTimeout: 2000,
+      followRedirects: false,
+      validateStatus: (status) => status != null && (status >= 200 && status < 300 || status == 304),
+    ),
   );
+
+  TMDBApiProvider(){
+    _initCacheStore();
+  }
+
+  // Optimizing network performance
+  void _initCacheStore() async {
+    var cacheStore = HiveCacheStore(
+        (await getTemporaryDirectory()).path,
+        hiveBoxName: 'cache',
+    );
+    _dio.interceptors.add(DioCacheInterceptor(
+        options: CacheOptions(
+          store: cacheStore,
+          policy: CachePolicy.forceCache,
+          priority: CachePriority.high,
+          maxStale: const Duration(minutes: 1),
+          allowPostMethod: false,
+          keyBuilder: (request) {
+            return request.uri.toString();
+          },
+        )
+    ));
+  }
 
   @override
   Future<List<Genre>?> getGenres() {
@@ -36,10 +67,11 @@ class TMDBApiProvider implements RemoteProvider {
     return fetchPopularMovies(page);
   }
 
-  // @override
-  // Future getDetails() async {
-  //   return;
-  // }
+  @override
+  Future<MovieDetail?> getMovieDetails(int id) async {
+    _logger.d("Fetching movie details, id: $id");
+    return fetchMovieDetails(id);
+  }
 
   Future<List<Movie>?> fetchPopularMovies(int page) async {
     Map? data = await  _getNetworkData(
@@ -64,22 +96,28 @@ class TMDBApiProvider implements RemoteProvider {
     return null;
   }
 
+  Future<MovieDetail?> fetchMovieDetails(int id) async {
+    Map? data = await _getNetworkData(path: "/movie/$id");
+    if(data != null){
+      return MovieDetail.fromJson(data as Map<String, dynamic>);
+    }
+    return null;
+  }
+
   Future<Map?> _getNetworkData({required String path, Map<String, dynamic>? queryParams}) async {
     // await Future.delayed(Duration(seconds: 2));
-
     try {
       Response response = await _dio.get(
           path,
           queryParameters: queryParams
       );
       _logger.d("Response statusCode: ${response.statusCode}");
-      if(response.statusCode != null && response.statusCode! / 100 == 2){
-        _logger.d("Response raw data: ${response.data}");
-        return response.data;
-      } else {
-        _logger.w("Network request was not successful");
-        return null;
-      }
+      _logger.d("Response raw data: ${response.data}");
+      return response.data;
+    } on DioError catch (e) {
+      _logger.w("Network request was not successful");
+      _logger.d("Error: ${e.type}");
+      return null;
     } catch (e, st) {
       _logger.e("Error while fetching data", ex: e, stacktrace: st);
       return null;

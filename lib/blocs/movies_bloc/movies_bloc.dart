@@ -25,6 +25,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
         super(MoviesInitial()) {
 
     on<MoviesFetchRequested>(_handleMovieFetchRequested);
+    on<MoviesRefresh>(_refreshMovieList);
     // on<MoviesScrollToTopPressed>(_onScrollToTop);
   }
 
@@ -35,13 +36,9 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
         return;
       }
     }
-    // emit(MoviesFetchInProgress());
     List<Movie>? movies = await _moviesRepository.getPopularMovies(currentPage + 1);
     if(movies != null){
-      // await Future.delayed(Duration(seconds: 2));
-      emit(currentState is MoviesFetchSuccess ?
-          MoviesFetchSuccess(List.of(currentState.movies)..addAll(movies), movies.isEmpty)
-          : MoviesFetchSuccess(movies, false));
+      emit(MoviesFetchSuccess(List.of(event.currentMovieList)..addAll(movies), movies.isEmpty));
       currentPage++;
     } else {
       emit(MoviesFetchFailure("Failed to fetch movie data"));
@@ -51,4 +48,17 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   // FutureOr<void> _onScrollToTop(MoviesScrollToTopPressed event, Emitter<MoviesState> emit) {
   //   emit(MoviesScrollToTop());
   // }
+
+  FutureOr<void> _refreshMovieList(MoviesRefresh event, Emitter<MoviesState> emit) async {
+    // emit(MoviesInitial());
+    currentPage = 0;
+    List<Movie>? movies = await _moviesRepository.getPopularMovies(currentPage + 1);
+    if(movies != null){
+      // await Future.delayed(Duration(seconds: 2));
+      emit(MoviesFetchSuccess(movies, movies.isEmpty));
+      currentPage++;
+    } else {
+      emit(MoviesFetchFailure("Failed to fetch movie data"));
+    }
+  }
 }

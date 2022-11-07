@@ -6,6 +6,7 @@
 import 'package:hive/hive.dart';
 
 import 'genre.dart';
+import 'movie_detail.dart';
 
 part 'movie.g.dart';
 

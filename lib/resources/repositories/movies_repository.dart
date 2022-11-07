@@ -4,6 +4,7 @@
  */
 
 import 'package:fimber/fimber.dart';
+import 'package:movies_app/models/movie_detail.dart';
 import 'package:movies_app/resources/interfaces/local_provider.dart';
 import 'package:movies_app/resources/interfaces/remote_provider.dart';
 
@@ -18,6 +19,25 @@ class MoviesRepository {
   MoviesRepository({required RemoteProvider remoteProvider, required LocalProvider localProvider})
     : _remoteProvider = remoteProvider, _localProvider = localProvider;
 
+  Future<List<Movie>?> getPopularMovies(int page) async {
+    // List<Movie>? movies = await _localProvider.getMovies(page);
+    List<Movie>? movies;
+    if(movies == null || movies.isEmpty){
+      movies = await _remoteProvider.getMovies(page);
+      if(movies != null){
+        List<Genre>? genres = await getGenres();
+        if(genres != null){
+          _mapMovieGenres(genres, movies);
+        }
+        _localProvider.storeMovies(movies);
+      } else {
+        movies = await _localProvider.getMovies(page);
+      }
+    }
+    _logger.d("Movies: $movies");
+    return movies;
+  }
+
   Future<List<Genre>?> getGenres() async {
     List<Genre>? genres = await _localProvider.getGenres();
     if(genres == null || genres.isEmpty){
@@ -30,22 +50,13 @@ class MoviesRepository {
     return genres;
   }
 
-  Future<List<Movie>?> getPopularMovies(int page) async {
-    List<Movie>? movies; //= await _localProvider.getMovies(page);
-    if(movies == null || movies.isEmpty){
-      movies = await _remoteProvider.getMovies(page);
-      if(movies != null){
-        List<Genre>? genres = await getGenres();
-        if(genres != null){
-          _mapMovieGenres(genres, movies);
-        }
-        // _localProvider.storeMovies(movies);
-      }
-    }
-    _logger.d("Movies: $movies");
-    return movies;
+  Future<MovieDetail?> getMovieDetails(int id) async {
+    MovieDetail? movie = await _remoteProvider.getMovieDetails(id);
+    movie ??= await _localProvider.getMovieDetails(id);
+    return movie;
   }
 
+  // Associate the genre ids with the genre names
   _mapMovieGenres(List<Genre> genres, List<Movie> movies) {
     for (Movie movie in movies) {
       movie.genres = movie.genreIds?.map((genreId) =>

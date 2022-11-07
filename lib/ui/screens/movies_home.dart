@@ -6,7 +6,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/blocs/movies_bloc/movies_bloc.dart';
-import 'package:movies_app/common/colors.dart';
 import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/ui/widgets/movies_list.dart';
 
@@ -22,7 +21,7 @@ class _MoviesHomeState extends State<MoviesHome> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<MoviesBloc>(context).add(MoviesFetchRequested());
+    BlocProvider.of<MoviesBloc>(context).add(MoviesFetchRequested([]));
   }
 
   @override

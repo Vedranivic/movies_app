@@ -10,6 +10,15 @@ abstract class MoviesEvent extends Equatable {
 }
 
 class MoviesFetchRequested extends MoviesEvent {
+  final List<Movie> currentMovieList;
+
+  const MoviesFetchRequested(this.currentMovieList);
+
+  @override
+  List<Object?> get props => [currentMovieList];
+}
+
+class MoviesRefresh extends MoviesEvent {
 
   @override
   List<Object?> get props => [];

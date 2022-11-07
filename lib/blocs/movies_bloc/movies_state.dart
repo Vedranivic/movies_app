@@ -14,11 +14,6 @@ class MoviesInitial extends MoviesState {
   List<Object> get props => [];
 }
 
-class MoviesFetchInProgress extends MoviesState {
-  @override
-  List<Object> get props => [];
-}
-
 class MoviesFetchSuccess extends MoviesState {
   final List<Movie> movies;
   final bool hasReachedMaxPage;
