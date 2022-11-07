@@ -22,7 +22,7 @@ class _MoviesHomeState extends State<MoviesHome> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<MoviesBloc>(context).add(MoviesStarted());
+    BlocProvider.of<MoviesBloc>(context).add(MoviesFetchRequested());
   }
 
   @override
@@ -70,15 +70,15 @@ class _MoviesHomeState extends State<MoviesHome> {
                       }
                     },
                     builder: (context, state) {
-                      if(state is MoviesFetchInProgress){
-                        return Center(
+                      if(state is MoviesInitial){
+                        return const Center(
                           child: CircularProgressIndicator()
                         );
                       }
                       if(state is MoviesFetchSuccess){
-                        return MoviesList(state.movies);
+                        return MoviesList(movies: state.movies, hasReachedMaxPage: state.hasReachedMaxPage,);
                       } else {
-                        return MoviesList([]);
+                        return const MoviesList(movies: [], hasReachedMaxPage: true,);
                       }
                     },
                   ),

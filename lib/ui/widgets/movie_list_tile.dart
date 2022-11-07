@@ -27,10 +27,20 @@ class _MovieListTileState extends State<MovieListTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            "https://image.tmdb.org/t/p/w500" + widget.movie.posterPath!,
+            "https://image.tmdb.org/t/p/w500${widget.movie.posterPath ?? ""}",
             fit: BoxFit.cover,
             height: 100,
             width: 100,
+            errorBuilder: ((context, error, stackTrace) => const SizedBox(
+              height: 100,
+              width: 100,
+              child: Center(
+                child: Icon(
+                  Icons.image_not_supported_outlined,
+                  color: primaryFaded,
+                ),
+              ),
+            )),
           ),
           Expanded(
             child: Container(

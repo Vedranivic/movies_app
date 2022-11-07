@@ -3,32 +3,54 @@
  * This file is part of movies_app Flutter application project.
  */
 
-import 'package:movies_app/resources/providers/tmdb_api_provider.dart';
+import 'package:fimber/fimber.dart';
+import 'package:movies_app/resources/interfaces/local_provider.dart';
+import 'package:movies_app/resources/interfaces/remote_provider.dart';
 
 import '../../models/genre.dart';
 import '../../models/movie.dart';
 
 class MoviesRepository {
-  TMDBApiProvider _tmdbApiProvider = TMDBApiProvider();
+  final RemoteProvider _remoteProvider;
+  final LocalProvider _localProvider;
+  final _logger = FimberLog((MoviesRepository).toString());
+
+  MoviesRepository({required RemoteProvider remoteProvider, required LocalProvider localProvider})
+    : _remoteProvider = remoteProvider, _localProvider = localProvider;
 
   Future<List<Genre>?> getGenres() async {
-    Map? data = await _tmdbApiProvider.fetchGenres();
-    if(data == null || data["genres"] == null){
-      return null;
+    List<Genre>? genres = await _localProvider.getGenres();
+    if(genres == null || genres.isEmpty){
+      genres = await _remoteProvider.getGenres();
+      if(genres != null){
+        _localProvider.storeGenres(genres);
+      }
     }
-    return (data["genres"] as List<dynamic>).map((item) => Genre.fromJson(item)).toList();
+    _logger.d("Genres: $genres");
+    return genres;
   }
 
-  Future<List<Movie>?> getPopularMovies() async {
-    Map? data = await _tmdbApiProvider.fetchPopularMovies();
-    if(data == null || data["results"] == null){
-      return null;
+  Future<List<Movie>?> getPopularMovies(int page) async {
+    List<Movie>? movies; //= await _localProvider.getMovies(page);
+    if(movies == null || movies.isEmpty){
+      movies = await _remoteProvider.getMovies(page);
+      if(movies != null){
+        List<Genre>? genres = await getGenres();
+        if(genres != null){
+          _mapMovieGenres(genres, movies);
+        }
+        // _localProvider.storeMovies(movies);
+      }
     }
-    List<Genre>? genres = await getGenres();
-    return (data["results"] as List<dynamic>).map((item) {
-      Movie movie = Movie.fromJson(item);
-      movie.genres = movie.genreIds!.map((id) => genres!.firstWhere((genre) => genre.id == id)).toList();
-      return movie;
-    }).toList();
+    _logger.d("Movies: $movies");
+    return movies;
+  }
+
+  _mapMovieGenres(List<Genre> genres, List<Movie> movies) {
+    for (Movie movie in movies) {
+      movie.genres = movie.genreIds?.map((genreId) =>
+          genres.firstWhere((genre) => genre.id == genreId)
+      ).toList();
+    }
   }
 }

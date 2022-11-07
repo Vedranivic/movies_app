@@ -3,8 +3,15 @@
  * This file is part of movies_app Flutter application project.
  */
 
-class Genre {
+import 'package:hive/hive.dart';
+
+part 'genre.g.dart';
+
+@HiveType(typeId: 1)
+class Genre extends HiveObject {
+  @HiveField(0)
   int? id;
+  @HiveField(1)
   String? name;
 
   Genre({this.id, this.name});

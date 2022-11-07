@@ -13,18 +13,21 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    _logger.v("Created bloc: $bloc");
+    _logger.d("Created bloc: $bloc");
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    _logger.v(transition.toString());
+    _logger.d("Transition: currentState: ${transition.currentState.runtimeType}, "
+        "event: ${transition.event.runtimeType}, "
+        "nextState: ${transition.nextState.runtimeType}"
+    );
   }
 
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    _logger.v("Closing bloc: $bloc");
+    _logger.d("Closing bloc: $bloc");
   }
 }

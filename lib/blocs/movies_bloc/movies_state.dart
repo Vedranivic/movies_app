@@ -21,11 +21,12 @@ class MoviesFetchInProgress extends MoviesState {
 
 class MoviesFetchSuccess extends MoviesState {
   final List<Movie> movies;
+  final bool hasReachedMaxPage;
 
-  const MoviesFetchSuccess(this.movies);
+  const MoviesFetchSuccess(this.movies, this.hasReachedMaxPage);
 
   @override
-  List<Object> get props => [movies];
+  List<Object> get props => [movies, hasReachedMaxPage];
 }
 
 class MoviesFetchFailure extends MoviesState {
@@ -37,5 +38,9 @@ class MoviesFetchFailure extends MoviesState {
   List<Object> get props => [message];
 }
 
+// class MoviesScrollToTop extends MoviesState {
+//   @override
+//   List<Object> get props => [];
+// }
 
 

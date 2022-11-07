@@ -3,23 +3,43 @@
  * This file is part of movies_app Flutter application project.
  */
 
+import 'package:hive/hive.dart';
+
 import 'genre.dart';
 
-class Movie {
+part 'movie.g.dart';
+
+@HiveType(typeId: 2)
+class Movie extends HiveObject{
+  @HiveField(0)
   bool? adult;
+  @HiveField(1)
   String? backdropPath;
+  @HiveField(2)
   List<int>? genreIds;
+  @HiveField(3)
   List<Genre>? genres;
+  @HiveField(4)
   int? id;
+  @HiveField(5)
   String? originalLanguage;
+  @HiveField(6)
   String? originalTitle;
+  @HiveField(7)
   String? overview;
+  @HiveField(8)
   double? popularity;
+  @HiveField(9)
   String? posterPath;
+  @HiveField(10)
   String? releaseDate;
+  @HiveField(11)
   String? title;
+  @HiveField(12)
   bool? video;
+  @HiveField(13)
   double? voteAverage;
+  @HiveField(14)
   int? voteCount;
 
   Movie(
@@ -46,7 +66,7 @@ class Movie {
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
     overview = json['overview'];
-    popularity = json['popularity'];
+    popularity = json['popularity'].toDouble();
     posterPath = json['poster_path'];
     releaseDate = json['release_date'];
     title = json['title'];
