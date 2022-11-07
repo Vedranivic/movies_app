@@ -66,7 +66,7 @@ class _MovieListTileState extends State<MovieListTile> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.movie.title! + " " + widget.movie.popularity!.toString(),
+                      widget.movie.title!,
                       style: itemTitleTextStyle,
                     ),
                     const SizedBox(height: 4,),
