@@ -3,12 +3,13 @@
  * This file is part of movies_app Flutter application project.
  */
 
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 part 'genre.g.dart';
 
 @HiveType(typeId: 1)
-class Genre extends HiveObject {
+class Genre with EquatableMixin, HiveObjectMixin {
   @HiveField(0)
   int? id;
   @HiveField(1)
@@ -27,4 +28,7 @@ class Genre extends HiveObject {
     data['name'] = this.name;
     return data;
   }
+
+  @override
+  List<Object> get props => [id!, name!];
 }

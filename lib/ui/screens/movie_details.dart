@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:movies_app/blocs/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/common/endpoints.dart';
 
+import '../../blocs/favourites/favourites_bloc.dart';
 import '../../common/colors.dart';
 import '../../common/styles.dart';
 import '../../models/movie.dart';
@@ -59,9 +60,30 @@ class _MovieDetailsState extends State<MovieDetails> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    state.movie.title!,
-                    style: detailsTitleTextStyle,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          state.movie.title!,
+                          style: detailsTitleTextStyle,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<FavouritesBloc>(context).add(
+                              FavouritesUpdate(widget.movie.id!, !widget.movie.isFavourite)
+                          );
+                          setState(() {
+                            widget.movie.isFavourite = !widget.movie.isFavourite;
+                          });
+                        },
+                        child: Icon(
+                          widget.movie.isFavourite ? Icons.bookmark_added : Icons.bookmark_outline,
+                          color: widget.movie.isFavourite ? appPrimaryColor : appTextColor,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8,),
                   MovieRating(state.movie.voteAverage!),
@@ -133,7 +155,6 @@ class _MovieDetailsState extends State<MovieDetails> {
             ),
           );
         } else if (state is MovieDetailsInitial){
-          //TODO: Display data from widget movie as placeholder and/or smoother transition?
           return const Center(
             child: CircularProgressIndicator(),
           );

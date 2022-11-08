@@ -5,9 +5,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/blocs/favourites/favourites_bloc.dart';
 import 'package:movies_app/blocs/movie_details_bloc/movie_details_bloc.dart';
-import 'package:movies_app/blocs/movies_bloc/movies_bloc.dart';
 import 'package:movies_app/common/endpoints.dart';
 import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/resources/repositories/movies_repository.dart';
@@ -35,27 +34,30 @@ class _MovieListTileState extends State<MovieListTile> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              "$tmdbImageBaseUrl${widget.movie.posterPath ?? ""}",
-              fit: BoxFit.cover,
-              height: 100,
-              width: 100,
-              errorBuilder: ((context, error, stackTrace) => DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: primaryFaded)
-                ),
-                child: const SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: Center(
-                    child: Icon(
-                      Icons.image_not_supported_outlined,
-                      color: primaryFaded,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(2),
+              child: Image.network(
+                "$tmdbImageBaseUrl${widget.movie.posterPath ?? ""}",
+                fit: BoxFit.cover,
+                height: 100,
+                width: 100,
+                errorBuilder: ((context, error, stackTrace) => DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(color: primaryFaded)
+                  ),
+                  child: const SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Center(
+                      child: Icon(
+                        Icons.image_not_supported_outlined,
+                        color: primaryFaded,
+                      ),
                     ),
                   ),
-                ),
-              )),
+                )),
+              ),
             ),
             Expanded(
               child: Container(
@@ -65,9 +67,27 @@ class _MovieListTileState extends State<MovieListTile> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.movie.title!,
-                      style: itemTitleTextStyle,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            widget.movie.title!,
+                            style: itemTitleTextStyle,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            BlocProvider.of<FavouritesBloc>(context).add(
+                                FavouritesUpdate(widget.movie.id!, !widget.movie.isFavourite)
+                            );
+                          },
+                          child: Icon(
+                            widget.movie.isFavourite ? Icons.bookmark_added : Icons.bookmark_outline,
+                            color: widget.movie.isFavourite ? appPrimaryColor : appTextColor,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 4,),
                     MovieRating(widget.movie.voteAverage!),
@@ -103,14 +123,21 @@ class _MovieListTileState extends State<MovieListTile> {
 
   void _showMovieDetails() {
     Navigator.of(context).push(
-      MaterialPageRoute(
-          builder: ((context) => BlocProvider<MovieDetailsBloc>(
-              create: (context) => MovieDetailsBloc(
-                RepositoryProvider.of<MoviesRepository>(this.context)
-              ),
+        MaterialPageRoute(
+            builder: ((context) => MultiBlocProvider(
+              providers: [
+                BlocProvider<MovieDetailsBloc>(
+                  create: (context) => MovieDetailsBloc(
+                      RepositoryProvider.of<MoviesRepository>(this.context)
+                  ),
+                ),
+                BlocProvider.value(
+                  value: BlocProvider.of<FavouritesBloc>(this.context),
+                ),
+              ],
               child: MovieDetails(widget.movie),
-          ))
-      )
+            ))
+        )
     );
   }
 }

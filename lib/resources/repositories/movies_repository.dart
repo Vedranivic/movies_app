@@ -20,21 +20,16 @@ class MoviesRepository {
     : _remoteProvider = remoteProvider, _localProvider = localProvider;
 
   Future<List<Movie>?> getPopularMovies(int page) async {
-    // List<Movie>? movies = await _localProvider.getMovies(page);
-    List<Movie>? movies;
-    if(movies == null || movies.isEmpty){
-      movies = await _remoteProvider.getMovies(page);
-      if(movies != null){
-        List<Genre>? genres = await getGenres();
-        if(genres != null){
-          _mapMovieGenres(genres, movies);
-        }
-        _localProvider.storeMovies(movies);
-      } else {
-        movies = await _localProvider.getMovies(page);
+    List<Movie>? movies = await _remoteProvider.getMovies(page);
+    if(movies != null){
+      List<Genre>? genres = await getGenres();
+      if(genres != null){
+        _mapMovieGenres(genres, movies);
       }
+      await _localProvider.storeMovies(movies);
     }
-    _logger.d("Movies: $movies");
+    movies = await _localProvider.getMovies(page);
+    _logger.d("Movies: ${movies?.map((e) => e.title)}");
     return movies;
   }
 
@@ -46,7 +41,7 @@ class MoviesRepository {
         _localProvider.storeGenres(genres);
       }
     }
-    _logger.d("Genres: $genres");
+    // _logger.d("Genres: $genres");
     return genres;
   }
 
@@ -54,6 +49,22 @@ class MoviesRepository {
     MovieDetail? movie = await _remoteProvider.getMovieDetails(id);
     movie ??= await _localProvider.getMovieDetails(id);
     return movie;
+  }
+
+  void addFavourite(int movieId) {
+    _localProvider.addFavourite(movieId);
+  }
+
+  void removeFavourite(int movieId) {
+    _localProvider.removeFavourite(movieId);
+  }
+
+  Stream<List<Movie>> getMoviesStream(){
+    return _localProvider.getMoviesStream();
+  }
+
+  Stream<List<Movie>> getFavouritesStream(){
+    return _localProvider.getFavouritesStream();
   }
 
   // Associate the genre ids with the genre names

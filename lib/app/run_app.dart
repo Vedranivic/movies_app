@@ -3,12 +3,12 @@
  * This file is part of movies_app Flutter application project.
  */
 
-import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:movies_app/blocs/favourites/favourites_bloc.dart';
 import 'package:movies_app/blocs/movies_bloc/movies_bloc.dart';
 import 'package:movies_app/common/colors.dart';
 import 'package:movies_app/models/genre.dart';
@@ -34,6 +34,7 @@ void runMoviesApp() async {
   runApp(const MyApp());
 }
 
+//TODO: Move to HiveProvider itself (init + late)
 Future _initializeHiveDB() async {
   // Initialize Hive DB to a valid directory
   await Hive.initFlutter();
@@ -71,10 +72,20 @@ class MyApp extends StatelessWidget {
             remoteProvider: TMDBApiProvider(),
             localProvider: HiveProvider()
           ),
-          child: BlocProvider(
-            create: (BuildContext context) => MoviesBloc(
-                moviesRepository: RepositoryProvider.of<MoviesRepository>(context)
-            ),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (BuildContext context) => MoviesBloc(
+                    moviesRepository: RepositoryProvider.of<MoviesRepository>(context)
+                ),
+              ),
+              BlocProvider(
+                lazy: false,
+                create: (BuildContext context) => FavouritesBloc(
+                    moviesRepository: RepositoryProvider.of<MoviesRepository>(context)
+                ),
+              )
+            ],
             child: const MoviesHome(),
           ),
         )

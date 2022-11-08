@@ -9,6 +9,12 @@ abstract class MoviesEvent extends Equatable {
   const MoviesEvent();
 }
 
+class MoviesStarted extends MoviesEvent {
+
+  @override
+  List<Object?> get props => [];
+}
+
 class MoviesFetchRequested extends MoviesEvent {
   final List<Movie> currentMovieList;
 
@@ -23,8 +29,3 @@ class MoviesRefresh extends MoviesEvent {
   @override
   List<Object?> get props => [];
 }
-
-// class MoviesScrollToTopPressed extends MoviesEvent {
-//   @override
-//   List<Object?> get props => [];
-// }

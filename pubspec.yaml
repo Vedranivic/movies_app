@@ -37,6 +37,7 @@ dependencies:
   flutter_native_splash: ^2.2.14
   path_provider: ^2.0.11
   dio_cache_interceptor_hive_store: ^3.2.0
+  rxdart: ^0.27.5
 
 dev_dependencies:
   flutter_test:

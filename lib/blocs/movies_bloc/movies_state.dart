@@ -20,8 +20,11 @@ class MoviesFetchSuccess extends MoviesState {
 
   const MoviesFetchSuccess(this.movies, this.hasReachedMaxPage);
 
+  // @override
+  // bool? get stringify => true;
+
   @override
-  List<Object> get props => [movies, hasReachedMaxPage];
+  List<Object> get props => [identityHashCode(movies), hasReachedMaxPage];
 }
 
 class MoviesFetchFailure extends MoviesState {
