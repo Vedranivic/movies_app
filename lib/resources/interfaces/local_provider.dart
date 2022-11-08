@@ -11,8 +11,7 @@ import '../../models/movie.dart';
 abstract class LocalProvider extends DataProvider {
   void storeGenres(List<Genre> genres);
   Future<void> storeMovies(List<Movie> movies);
-  void addFavourite(int movieId);
-  void removeFavourite(int movieId);
+  void toggleFavourite(int movieId, bool isFavourite);
   Stream<List<Movie>> getMoviesStream();
   Stream<List<Movie>> getFavouritesStream();
 }

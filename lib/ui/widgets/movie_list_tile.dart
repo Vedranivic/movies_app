@@ -28,6 +28,7 @@ class _MovieListTileState extends State<MovieListTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: _showMovieDetails,
       child: Container(
         padding: const EdgeInsets.only(bottom: 20),

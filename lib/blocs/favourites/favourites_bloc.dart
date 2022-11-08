@@ -36,11 +36,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
 
   FutureOr<void> _addFavourite(FavouritesUpdate event, Emitter<FavouritesState> emit) {
     try {
-      if(event.isFavourite){
-            _moviesRepository.addFavourite(event.movieId);
-          } else {
-            _moviesRepository.removeFavourite(event.movieId);
-          }
+      _moviesRepository.toggleFavourite(event.movieId, event.isFavourite);
     } catch (e) {
       _logger.w("Error updating favourite");
       emit(FavouritesFailure("Failed ${event.isFavourite ? "adding" : "removing"} favourite"));

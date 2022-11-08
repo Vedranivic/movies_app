@@ -51,12 +51,8 @@ class MoviesRepository {
     return movie;
   }
 
-  void addFavourite(int movieId) {
-    _localProvider.addFavourite(movieId);
-  }
-
-  void removeFavourite(int movieId) {
-    _localProvider.removeFavourite(movieId);
+  void toggleFavourite(int movieId, bool isFavourite) {
+    _localProvider.toggleFavourite(movieId, isFavourite);
   }
 
   Stream<List<Movie>> getMoviesStream(){

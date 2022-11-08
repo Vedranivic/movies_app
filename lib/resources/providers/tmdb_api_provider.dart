@@ -18,21 +18,31 @@ import '../interfaces/remote_provider.dart';
 /// Remote source provider - The Movie DB API
 class TMDBApiProvider implements RemoteProvider {
   final _logger = FimberLog((TMDBApiProvider).toString());
-  final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: tmdbApiBaseUrl,
-      queryParameters: {
-        "api_key" : tmdbApiKey,
-        "language" : "en_US"
-      },
-      connectTimeout: 2000,
-      followRedirects: false,
-      validateStatus: (status) => status != null && (status >= 200 && status < 300 || status == 304),
-    ),
-  );
+  late Dio _dio;
 
   TMDBApiProvider(){
+    _initDioClient();
     _initCacheStore();
+  }
+
+  void _initDioClient() {
+    _dio  = Dio(
+      BaseOptions(
+        baseUrl: tmdbApiBaseUrl,
+        queryParameters: {
+          // "api_key" : tmdbApiKey,
+          "language" : "en_US"
+        },
+        connectTimeout: 2000,
+        followRedirects: false,
+        validateStatus: (status) => status != null && (status >= 200 && status < 300 || status == 304),
+      ),
+    )..interceptors.add(
+        InterceptorsWrapper(
+            onRequest: ((options, handler)
+              => handler.next(options..headers["Authorization"] = "Bearer $tmdbBearerToken"))
+        )
+    );
   }
 
   // Optimizing network performance

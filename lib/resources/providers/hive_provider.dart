@@ -71,16 +71,9 @@ class HiveProvider implements LocalProvider {
   }
 
   @override
-  void addFavourite(int movieId) {
+  void toggleFavourite(int movieId, bool isFavourite) {
     _moviesBox.get(movieId)
-        ?..isFavourite = true
-        ..save();
-  }
-
-  @override
-  void removeFavourite(int movieId) async {
-    _moviesBox.get(movieId)
-        ?..isFavourite = false
+        ?..isFavourite = isFavourite
         ..save();
   }
 
