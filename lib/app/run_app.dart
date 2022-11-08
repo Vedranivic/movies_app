@@ -3,6 +3,7 @@
  * This file is part of movies_app Flutter application project.
  */
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:movies_app/resources/providers/tmdb_api_provider.dart';
 import 'package:movies_app/resources/repositories/movies_repository.dart';
 import 'package:movies_app/ui/screens/movies_home.dart';
 
+import '../blocs/connectivity/connectivity_bloc.dart';
 import 'app_bloc_observer.dart';
 import 'app_format_tree.dart';
 
@@ -84,6 +86,9 @@ class MyApp extends StatelessWidget {
                 create: (BuildContext context) => FavouritesBloc(
                     moviesRepository: RepositoryProvider.of<MoviesRepository>(context)
                 ),
+              ),
+              BlocProvider<ConnectivityBloc>(
+                create: (context) => ConnectivityBloc()..add(ConnectivityStartedMonitoring()),
               )
             ],
             child: const MoviesHome(),
