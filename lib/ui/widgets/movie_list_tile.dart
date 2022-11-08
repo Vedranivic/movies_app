@@ -10,6 +10,7 @@ import 'package:movies_app/blocs/movie_details_bloc/movie_details_bloc.dart';
 import 'package:movies_app/common/endpoints.dart';
 import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/resources/repositories/movies_repository.dart';
+import 'package:movies_app/ui/widgets/animate_page_route.dart';
 import 'package:movies_app/ui/widgets/movie_rating.dart';
 
 import '../../common/colors.dart';
@@ -124,8 +125,8 @@ class _MovieListTileState extends State<MovieListTile> {
 
   void _showMovieDetails() {
     Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: ((context) => MultiBlocProvider(
+        AnimatedPageRoute(
+          builder: (context) => MultiBlocProvider(
               providers: [
                 BlocProvider<MovieDetailsBloc>(
                   create: (context) => MovieDetailsBloc(
@@ -137,8 +138,8 @@ class _MovieListTileState extends State<MovieListTile> {
                 ),
               ],
               child: MovieDetails(widget.movie),
-            ))
-        )
+          ),
+        ),
     );
   }
 }
