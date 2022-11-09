@@ -31,13 +31,14 @@ class MovieAdapter extends TypeAdapter<Movie> {
       video: fields[12] as bool?,
       voteAverage: fields[13] as double?,
       voteCount: fields[14] as int?,
+      isFavourite: fields[15] as bool,
     )..genres = (fields[3] as List?)?.cast<Genre>();
   }
 
   @override
   void write(BinaryWriter writer, Movie obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.adult)
       ..writeByte(1)
@@ -67,7 +68,9 @@ class MovieAdapter extends TypeAdapter<Movie> {
       ..writeByte(13)
       ..write(obj.voteAverage)
       ..writeByte(14)
-      ..write(obj.voteCount);
+      ..write(obj.voteCount)
+      ..writeByte(15)
+      ..write(obj.isFavourite);
   }
 
   @override

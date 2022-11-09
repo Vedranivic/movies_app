@@ -44,3 +44,8 @@ const TextStyle descriptionTextStyle = TextStyle(
     fontSize: 13,
     height: 18/13
 );
+const TextStyle tabLabelTextStyle = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 12,
+    height: 16/12
+);

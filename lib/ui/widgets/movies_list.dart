@@ -7,24 +7,23 @@ import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/common/colors.dart';
-import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/ui/widgets/bottom_loader.dart';
 import 'package:movies_app/ui/widgets/movie_list_tile.dart';
 
 import '../../blocs/movies_bloc/movies_bloc.dart';
 import '../../models/movie.dart';
-import '../screens/movie_details.dart';
 
 class MoviesList extends StatefulWidget {
-  const MoviesList({required this.movies, this.hasReachedMaxPage = false, Key? key}) : super(key: key);
+  const MoviesList({required this.movies, this.hasReachedMaxPage = true, this.pullToRefresh = false, Key? key}) : super(key: key);
   final List<Movie> movies;
   final bool hasReachedMaxPage;
+  final bool pullToRefresh;
 
   @override
   State<MoviesList> createState() => _MoviesListState();
 }
 
-class _MoviesListState extends State<MoviesList> {
+class _MoviesListState extends State<MoviesList> with AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
   final _logger = FimberLog((MoviesList).toString());
 
@@ -37,6 +36,9 @@ class _MoviesListState extends State<MoviesList> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   void didUpdateWidget(covariant MoviesList oldWidget) {
     super.didUpdateWidget(oldWidget);
     if(widget.movies.length > oldWidget.movies.length){
@@ -46,51 +48,44 @@ class _MoviesListState extends State<MoviesList> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomRight,
-      children: [
-        RefreshIndicator(
-          onRefresh: _onListRefresh,
-          color: appScaffoldBackgroundColor,
-          backgroundColor: appPrimaryColor,
-          child: widget.movies.isEmpty
-            ? ListView(
-              children: const [
-                Center(
-                  child: Text(
-                    "No movies. Pull to refresh"
+    return RefreshIndicator(
+      notificationPredicate: (_) => widget.pullToRefresh,
+      onRefresh: _onListRefresh,
+      color: appScaffoldBackgroundColor,
+      backgroundColor: appPrimaryColor,
+      child: widget.movies.isEmpty
+        ? LayoutBuilder(
+          builder: (context, constraints) {
+            return ListView(
+              children: [
+                Container(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "No movies${widget.pullToRefresh ? ". Pull to refresh." : ""}"
+                    ),
                   ),
                 )
               ],
-            )
-            : ListView.builder(
-              controller: _scrollController,
-              // Additional list item for bottom loader in pagination
-              itemCount: widget.hasReachedMaxPage
-                  ? widget.movies.length
-                  : widget.movies.length + 1,
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index){
-                return index < widget.movies.length
-                  ? MovieListTile(widget.movies[index])
-                  : const BottomLoader();
-              }
-          ),
-        ),
-        // ScrollToTopFab
-        // Padding(
-        //   padding: const EdgeInsets.only(bottom: 20),
-        //   child: FloatingActionButton(
-        //     onPressed: _scrollToTop,
-        //     backgroundColor: appPrimaryColor,
-        //     child: Icon(
-        //       Icons.arrow_upward_rounded,
-        //       color: appScaffoldBackgroundColor,
-        //     ),
-        //   ),
-        // ),
-      ],
+            );
+          }
+        )
+        : ListView.builder(
+          controller: _scrollController,
+          // Additional list item for bottom loader in pagination
+          itemCount: widget.hasReachedMaxPage
+              ? widget.movies.length
+              : widget.movies.length + 1,
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          itemBuilder: (context, index){
+            return index < widget.movies.length
+              ? MovieListTile(widget.movies[index])
+              : const BottomLoader();
+          }
+      ),
     );
   }
 

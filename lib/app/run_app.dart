@@ -3,21 +3,22 @@
  * This file is part of movies_app Flutter application project.
  */
 
-import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:movies_app/blocs/movies_bloc/movies_bloc.dart';
-import 'package:movies_app/common/colors.dart';
-import 'package:movies_app/models/genre.dart';
-import 'package:movies_app/models/movie.dart';
-import 'package:movies_app/resources/providers/hive_provider.dart';
-import 'package:movies_app/resources/providers/tmdb_api_provider.dart';
-import 'package:movies_app/resources/repositories/movies_repository.dart';
-import 'package:movies_app/ui/screens/movies_home.dart';
 
+import '../blocs/connectivity/connectivity_bloc.dart';
+import '../blocs/favourites/favourites_bloc.dart';
+import '../blocs/movies_bloc/movies_bloc.dart';
+import '../common/colors.dart';
+import '../domain/providers/hive_provider.dart';
+import '../domain/providers/tmdb_api_provider.dart';
+import '../domain/repositories/movies_repository.dart';
+import '../models/genre.dart';
+import '../models/movie.dart';
+import '../ui/screens/home/movies_home.dart';
 import 'app_bloc_observer.dart';
 import 'app_format_tree.dart';
 
@@ -34,6 +35,7 @@ void runMoviesApp() async {
   runApp(const MyApp());
 }
 
+//TODO: Move to HiveProvider itself (init + late)
 Future _initializeHiveDB() async {
   // Initialize Hive DB to a valid directory
   await Hive.initFlutter();
@@ -71,10 +73,23 @@ class MyApp extends StatelessWidget {
             remoteProvider: TMDBApiProvider(),
             localProvider: HiveProvider()
           ),
-          child: BlocProvider(
-            create: (BuildContext context) => MoviesBloc(
-                moviesRepository: RepositoryProvider.of<MoviesRepository>(context)
-            ),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (BuildContext context) => MoviesBloc(
+                    moviesRepository: RepositoryProvider.of<MoviesRepository>(context)
+                ),
+              ),
+              BlocProvider(
+                lazy: false,
+                create: (BuildContext context) => FavouritesBloc(
+                    moviesRepository: RepositoryProvider.of<MoviesRepository>(context)
+                ),
+              ),
+              BlocProvider<ConnectivityBloc>(
+                create: (context) => ConnectivityBloc()..add(ConnectivityStartedMonitoring()),
+              )
+            ],
             child: const MoviesHome(),
           ),
         )
