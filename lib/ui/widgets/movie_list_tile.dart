@@ -5,17 +5,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/blocs/favourites/favourites_bloc.dart';
-import 'package:movies_app/blocs/movie_details_bloc/movie_details_bloc.dart';
-import 'package:movies_app/common/endpoints.dart';
-import 'package:movies_app/common/styles.dart';
-import 'package:movies_app/resources/repositories/movies_repository.dart';
-import 'package:movies_app/ui/widgets/animate_page_route.dart';
-import 'package:movies_app/ui/widgets/movie_rating.dart';
 
+import '../../blocs/favourites/favourites_bloc.dart';
+import '../../blocs/movie_details_bloc/movie_details_bloc.dart';
 import '../../common/colors.dart';
+import '../../common/endpoints.dart';
+import '../../common/styles.dart';
+import '../../domain/repositories/movies_repository.dart';
 import '../../models/movie.dart';
-import '../screens/movie_details.dart';
+import '../screens/details/movie_details.dart';
+import 'animate_page_route.dart';
+import 'movie_rating.dart';
 
 class MovieListTile extends StatefulWidget {
   const MovieListTile(this.movie, {Key? key}) : super(key: key);

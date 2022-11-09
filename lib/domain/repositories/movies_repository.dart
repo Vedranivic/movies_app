@@ -5,11 +5,11 @@
 
 import 'package:fimber/fimber.dart';
 import 'package:movies_app/models/movie_detail.dart';
-import 'package:movies_app/resources/interfaces/local_provider.dart';
-import 'package:movies_app/resources/interfaces/remote_provider.dart';
 
 import '../../models/genre.dart';
 import '../../models/movie.dart';
+import '../interfaces/local_provider.dart';
+import '../interfaces/remote_provider.dart';
 
 class MoviesRepository {
   final RemoteProvider _remoteProvider;

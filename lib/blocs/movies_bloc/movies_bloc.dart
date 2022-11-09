@@ -8,12 +8,11 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fimber/fimber.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../common/endpoints.dart';
+import '../../domain/repositories/movies_repository.dart';
 import '../../models/movie.dart';
-import '../../resources/repositories/movies_repository.dart';
 
 part 'movies_event.dart';
 part 'movies_state.dart';

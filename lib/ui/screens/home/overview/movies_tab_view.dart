@@ -7,9 +7,9 @@ import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/movies_bloc/movies_bloc.dart';
-import '../../common/styles.dart';
-import 'movies_list.dart';
+import '../../../../blocs/movies_bloc/movies_bloc.dart';
+import '../../../../common/styles.dart';
+import '../../../widgets/movies_list.dart';
 
 class MoviesTabView extends StatelessWidget {
   MoviesTabView({Key? key,}) : super(key: key);

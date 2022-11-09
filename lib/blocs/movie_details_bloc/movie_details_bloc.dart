@@ -7,7 +7,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:movies_app/resources/repositories/movies_repository.dart';
+import 'package:movies_app/domain/repositories/movies_repository.dart';
 
 import '../../models/movie_detail.dart';
 

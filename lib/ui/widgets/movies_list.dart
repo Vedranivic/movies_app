@@ -7,13 +7,11 @@ import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/common/colors.dart';
-import 'package:movies_app/common/styles.dart';
 import 'package:movies_app/ui/widgets/bottom_loader.dart';
 import 'package:movies_app/ui/widgets/movie_list_tile.dart';
 
 import '../../blocs/movies_bloc/movies_bloc.dart';
 import '../../models/movie.dart';
-import '../screens/movie_details.dart';
 
 class MoviesList extends StatefulWidget {
   const MoviesList({required this.movies, this.hasReachedMaxPage = true, this.pullToRefresh = false, Key? key}) : super(key: key);

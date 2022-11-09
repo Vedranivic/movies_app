@@ -5,13 +5,13 @@
 
 import 'package:fimber/fimber.dart';
 import 'package:hive/hive.dart';
-import 'package:movies_app/common/endpoints.dart';
-import 'package:movies_app/models/movie_detail.dart';
-import 'package:movies_app/resources/interfaces/local_provider.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../common/endpoints.dart';
 import '../../models/genre.dart';
 import '../../models/movie.dart';
+import '../../models/movie_detail.dart';
+import '../interfaces/local_provider.dart';
 
 /// Local source provider - [DB] database
 class HiveProvider implements LocalProvider {

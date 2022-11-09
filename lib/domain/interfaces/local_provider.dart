@@ -3,10 +3,9 @@
  * This file is part of movies_app Flutter application project.
  */
 
-import 'package:movies_app/resources/interfaces/data_provider.dart';
-
 import '../../models/genre.dart';
 import '../../models/movie.dart';
+import 'data_provider.dart';
 
 abstract class LocalProvider extends DataProvider {
   void storeGenres(List<Genre> genres);

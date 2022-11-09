@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/blocs/favourites/favourites_bloc.dart';
 
-import '../../common/styles.dart';
-import '../../models/movie.dart';
-import 'movies_list.dart';
+import '../../../../common/styles.dart';
+import '../../../../models/movie.dart';
+import '../../../widgets/movies_list.dart';
 
 class FavouritesTabView extends StatefulWidget {
   const FavouritesTabView({Key? key,}) : super(key: key);

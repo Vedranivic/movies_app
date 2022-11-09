@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/common/colors.dart';
 
-import '../../blocs/connectivity/connectivity_bloc.dart';
-import '../../blocs/movies_bloc/movies_bloc.dart';
-import '../widgets/favourites_tab_view.dart';
-import '../widgets/home_bottom_navigation_bar.dart';
-import '../widgets/movies_tab_view.dart';
-import '../widgets/offline_notification_icon.dart';
+import '../../../blocs/connectivity/connectivity_bloc.dart';
+import '../../../blocs/movies_bloc/movies_bloc.dart';
+import '../../widgets/home_bottom_navigation_bar.dart';
+import '../../widgets/offline_notification_icon.dart';
+import 'favourites/favourites_tab_view.dart';
+import 'overview/movies_tab_view.dart';
 
 class MoviesHome extends StatefulWidget {
   const MoviesHome({Key? key}) : super(key: key);
