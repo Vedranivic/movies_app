@@ -3,6 +3,7 @@
  * This file is part of movies_app Flutter application project.
  */
 
+import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +12,8 @@ import '../../common/styles.dart';
 import 'movies_list.dart';
 
 class MoviesTabView extends StatelessWidget {
-  const MoviesTabView({Key? key,}) : super(key: key);
+  MoviesTabView({Key? key,}) : super(key: key);
+  final _logger = FimberLog((MoviesTabView).toString());
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class MoviesTabView extends StatelessWidget {
                       child: CircularProgressIndicator()
                   );
                 } else if (state is MoviesFetchSuccess){
+                  _logger.d("View movies: ${state.movies.length}");
                   return MoviesList(
                     movies: state.movies,
                     hasReachedMaxPage: state.hasReachedMaxPage,

@@ -29,7 +29,8 @@ class MoviesRepository {
       await _localProvider.storeMovies(movies);
     }
     movies = await _localProvider.getMovies(page);
-    _logger.d("Movies: ${movies?.map((e) => e.title)}");
+    // _logger.d("Movies: ${movies?.map((e) => e.title)}");
+    _logger.d("Movies: ${movies?.length}");
     return movies;
   }
 

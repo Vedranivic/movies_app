@@ -37,6 +37,9 @@ class HiveProvider implements LocalProvider {
     return _moviesBox
         .watch()
         .map((event) => _getAllMoviesSorted())
+        // Prevent unnecessary stream updates (e.g. putAll((N)elements) triggers (N) BoxEvents)
+        .throttleTime(const Duration(milliseconds: 1))
+        // Emit starting value using RxDart (there is none with Hive watch by default)
         .startWith(_getAllMoviesSorted().toList());
   }
 

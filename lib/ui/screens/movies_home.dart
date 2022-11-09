@@ -65,12 +65,12 @@ class _MoviesHomeState extends State<MoviesHome> {
                       ],
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: TabBarView(
                       // physics: NeverScrollableScrollPhysics(),
                       children: [
                         MoviesTabView(),
-                        FavouritesTabView(),
+                        const FavouritesTabView(),
                       ],
                     ),
                   ),
