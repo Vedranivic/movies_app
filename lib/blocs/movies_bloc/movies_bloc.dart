@@ -67,7 +67,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       //Increase page on successful fetch only
       currentPage++;
     } else {
-      emit(const MoviesFetchFailure("Failed to fetch movie data"));
+      emit(MoviesFetchFailure("Failed to fetch movie data", event.currentMovieList));
     }
   }
 
@@ -80,7 +80,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
       //Increase page on successful fetch only
       currentPage++;
     } else {
-      emit(const MoviesFetchFailure("Failed to fetch movie data"));
+      emit(const MoviesFailure("Failed to fetch movie data"));
     }
   }
 }

@@ -31,15 +31,16 @@ class MoviesTabView extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: BlocConsumer<MoviesBloc, MoviesState>(
               listener: (context, state) {
-                if(state is MoviesFetchFailure){
+                if(state is MoviesFailure){
                   ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
+                        duration: const Duration(seconds: 1),
                         content: Text(state.message),
                       )
                   );
                 }
               },
-              buildWhen: (previous, current) => current is MoviesFetchSuccess,
+              buildWhen: (previous, current) => current is MoviesFetchSuccess || current is MoviesFetchFailure,
               builder: (context, state) {
                 if(state is MoviesInitial){
                   return const Center(
@@ -50,6 +51,11 @@ class MoviesTabView extends StatelessWidget {
                   return MoviesList(
                     movies: state.movies,
                     hasReachedMaxPage: state.hasReachedMaxPage,
+                    pullToRefresh: true,
+                  );
+                } else if (state is MoviesFetchFailure){
+                  return MoviesList(movies: state.movies,
+                    hasReachedMaxPage: false,
                     pullToRefresh: true,
                   );
                 }
