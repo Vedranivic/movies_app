@@ -11,6 +11,7 @@ import '../../../../blocs/movies_bloc/movies_bloc.dart';
 import '../../../../common/styles.dart';
 import '../../../widgets/movies_list.dart';
 
+/// Movies Overview for displaying popular [Movie] data in batches (pagination) from network and cache combined
 class MoviesTabView extends StatelessWidget {
   MoviesTabView({Key? key,}) : super(key: key);
   final _logger = FimberLog((MoviesTabView).toString());

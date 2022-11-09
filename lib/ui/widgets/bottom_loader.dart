@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+/// Widget for showing a loading indication on pagination requests
 class BottomLoader extends StatelessWidget {
   const BottomLoader({super.key});
 

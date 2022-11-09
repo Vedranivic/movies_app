@@ -6,6 +6,7 @@
 import 'genre.dart';
 import 'movie.dart';
 
+/// Movie detail data model
 class MovieDetail {
   bool? adult;
   String? backdropPath;

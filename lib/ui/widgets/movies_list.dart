@@ -13,10 +13,13 @@ import 'package:movies_app/ui/widgets/movie_list_tile.dart';
 import '../../blocs/movies_bloc/movies_bloc.dart';
 import '../../models/movie.dart';
 
+/// Custom List widget for displaying [List<Movie>] data with optional Pull-to-refresh feature
 class MoviesList extends StatefulWidget {
   const MoviesList({required this.movies, this.hasReachedMaxPage = true, this.pullToRefresh = false, Key? key}) : super(key: key);
   final List<Movie> movies;
+  /// Used to indicate whether [BottomLoader] should be in the list or not
   final bool hasReachedMaxPage;
+  /// Optional pull to refresh feature using [RefreshIndicator]
   final bool pullToRefresh;
 
   @override

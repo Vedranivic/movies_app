@@ -5,6 +5,8 @@
 
 import 'package:flutter/material.dart';
 
+/// Color constants used within the app
+
 const Color appPrimaryColor = Color(0xFFEC9B3E);
 const Color appScaffoldBackgroundColor = Color(0xFF0E1324);
 const Color appTextColor = Color(0xFFE4ECEF);

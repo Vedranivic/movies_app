@@ -12,6 +12,8 @@ import 'package:equatable/equatable.dart';
 part 'connectivity_event.dart';
 part 'connectivity_state.dart';
 
+/// BLoC component for Connectivity Monitoring using [Connectivity] plugin.
+/// Provided at the top of the widget tree to be used where ever there is a need for connection status
 class ConnectivityBloc extends Bloc<ConnectivityEvent, ConnectivityState> {
   ConnectivityBloc() : super(ConnectivityInitial()) {
     on<ConnectivityStartedMonitoring>(_startMonitoring);

@@ -14,6 +14,7 @@ import '../../models/movie_detail.dart';
 part 'movie_details_event.dart';
 part 'movie_details_state.dart';
 
+/// BLoC component for Movie details view
 class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   final MoviesRepository _moviesRepository;
 

@@ -25,6 +25,7 @@ class TMDBApiProvider implements RemoteProvider {
     _initCacheStore();
   }
 
+  /// Initialize Dio client with endpoint/connection values and interceptors
   void _initDioClient() {
     _dio  = Dio(
       BaseOptions(
@@ -35,6 +36,7 @@ class TMDBApiProvider implements RemoteProvider {
         },
         connectTimeout: 2000,
         followRedirects: false,
+        // custom validate status to trigger DioErrors properly
         validateStatus: (status) => status != null && (status >= 200 && status < 300 || status == 304),
       ),
     )..interceptors.add(
@@ -45,7 +47,7 @@ class TMDBApiProvider implements RemoteProvider {
     );
   }
 
-  // Optimizing network performance
+  /// Adds [DioCacheInterceptor] for optimizing network performance
   void _initCacheStore() async {
     var cacheStore = HiveCacheStore(
         (await getTemporaryDirectory()).path,
@@ -56,6 +58,7 @@ class TMDBApiProvider implements RemoteProvider {
           store: cacheStore,
           policy: CachePolicy.forceCache,
           priority: CachePriority.high,
+          // Withing [maxStale] minutes - fetch network data from temporary cache
           maxStale: const Duration(minutes: 1),
           allowPostMethod: false,
           keyBuilder: (request) {
@@ -114,6 +117,7 @@ class TMDBApiProvider implements RemoteProvider {
     return null;
   }
 
+  /// General network request reused
   Future<Map?> _getNetworkData({required String path, Map<String, dynamic>? queryParams}) async {
     // await Future.delayed(Duration(seconds: 2));
     try {

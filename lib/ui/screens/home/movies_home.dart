@@ -14,6 +14,7 @@ import '../../widgets/offline_notification_icon.dart';
 import 'favourites/favourites_tab_view.dart';
 import 'overview/movies_tab_view.dart';
 
+/// Home Widget for Movie Overview and Favourites Tabs
 class MoviesHome extends StatefulWidget {
   const MoviesHome({Key? key}) : super(key: key);
 

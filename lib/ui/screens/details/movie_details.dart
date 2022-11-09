@@ -15,6 +15,7 @@ import '../../../common/styles.dart';
 import '../../../models/movie.dart';
 import '../../widgets/movie_rating.dart';
 
+/// Movie Details View for displaying [MovieDetails] data model
 class MovieDetails extends StatefulWidget {
   const MovieDetails(this.movie, {Key? key}) : super(key: key);
   final Movie movie;
@@ -78,9 +79,12 @@ class _MovieDetailsState extends State<MovieDetails> {
                             widget.movie.isFavourite = !widget.movie.isFavourite;
                           });
                         },
-                        child: Icon(
-                          widget.movie.isFavourite ? Icons.bookmark_added : Icons.bookmark_outline,
-                          color: widget.movie.isFavourite ? appPrimaryColor : appTextColor,
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 400),
+                          child: Icon(
+                            widget.movie.isFavourite ? Icons.bookmark_added : Icons.bookmark_outline,
+                            color: widget.movie.isFavourite ? appPrimaryColor : appTextColor,
+                          ),
                         ),
                       ),
                     ],

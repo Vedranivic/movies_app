@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 
 part 'genre.g.dart';
 
+/// Genre data model
 @HiveType(typeId: 1)
 class Genre with EquatableMixin, HiveObjectMixin {
   @HiveField(0)

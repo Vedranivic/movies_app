@@ -22,7 +22,7 @@ import '../ui/screens/home/movies_home.dart';
 import 'app_bloc_observer.dart';
 import 'app_format_tree.dart';
 
-/// runApp with app customizations
+/// App Entry point (runApp with app customizations, dependencies injected and repos provided)
 void runMoviesApp() async {
   FlutterNativeSplash.preserve(widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   // Global logging setup

@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../common/styles.dart';
 
+/// Widget for displaying [Movie.voteAverage] rating
 class MovieRating extends StatelessWidget {
   const MovieRating(this.rating, {Key? key,}) : super(key: key);
   final double rating;
