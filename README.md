@@ -1,8 +1,9 @@
 # movies_app
+<img align="left" width="80" height="80" src="https://user-images.githubusercontent.com/27995181/200865661-db83f426-3a00-4ea3-a379-e1aab6a051a2.png" alt="logo"> Simple IMDB-like application
 
-Simple IMDB-like application
-
-<img src="https://user-images.githubusercontent.com/27995181/200849094-6b600472-ec76-4ba5-8c4c-b39c1f463163.png" alt="logo" width=100/>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/27995181/200864306-7da62f8f-d7b9-4967-a9bf-b5ced80fc1d6.png" width=300/>
+</p>
 
 ## Features
 
