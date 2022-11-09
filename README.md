@@ -49,3 +49,9 @@ Note: Connectivity monitoring works on physical devices only.
   <img src="https://user-images.githubusercontent.com/27995181/200854893-0b88a152-793f-4ec5-a709-781701da182b.gif" width=300 style="width:300px"/>
  </kbd>
  </div>
+
+## Possible improvements/next steps
+- App Testing
+- Clearing cache manually
+- CachedNetworkImage instead of Image.network widget
+- Pagination improvements
