@@ -12,3 +12,4 @@ const Color appScaffoldBackgroundColor = Color(0xFF0E1324);
 const Color appTextColor = Color(0xFFE4ECEF);
 const Color primaryFaded = Color(0x32EC9B3E);
 const Color navigationBarColor = Color(0xFF010510);
+const Color favouriteSplashColor = Color(0x47B50534);

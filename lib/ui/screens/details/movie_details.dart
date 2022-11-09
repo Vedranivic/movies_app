@@ -70,21 +70,24 @@ class _MovieDetailsState extends State<MovieDetails> {
                           style: detailsTitleTextStyle,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<FavouritesBloc>(context).add(
-                              FavouritesUpdate(widget.movie.id!, !widget.movie.isFavourite)
-                          );
-                          setState(() {
-                            widget.movie.isFavourite = !widget.movie.isFavourite;
-                          });
-                        },
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 400),
-                          child: Icon(
+                      Material(
+                        color: Colors.transparent,
+                        child: IconButton(
+                          splashColor: favouriteSplashColor,
+                          highlightColor: favouriteSplashColor,
+                          splashRadius: 24,
+                          icon: Icon(
                             widget.movie.isFavourite ? Icons.bookmark_added : Icons.bookmark_outline,
                             color: widget.movie.isFavourite ? appPrimaryColor : appTextColor,
                           ),
+                          onPressed: (){
+                            BlocProvider.of<FavouritesBloc>(context).add(
+                                FavouritesUpdate(widget.movie.id!, !widget.movie.isFavourite)
+                            );
+                            setState(() {
+                              widget.movie.isFavourite = !widget.movie.isFavourite;
+                            });
+                          },
                         ),
                       ),
                     ],
