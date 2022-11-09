@@ -18,7 +18,7 @@ class MovieRating extends StatelessWidget {
     return Row(
       children: [
         SvgPicture.asset("assets/images/star_black_24dp.svg"),
-        SizedBox(width: 4,),
+        const SizedBox(width: 4,),
         Text(
           "${rating.toString()} / 10 IMDb",
           style: ratingTextStyle,

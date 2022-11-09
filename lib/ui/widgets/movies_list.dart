@@ -3,7 +3,6 @@
  * This file is part of movies_app Flutter application project.
  */
 
-import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/common/colors.dart';
@@ -28,7 +27,7 @@ class MoviesList extends StatefulWidget {
 
 class _MoviesListState extends State<MoviesList> with AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
-  final _logger = FimberLog((MoviesList).toString());
+  // final _logger = FimberLog((MoviesList).toString());
 
   bool _isFetchRequested = false;
 
@@ -51,6 +50,7 @@ class _MoviesListState extends State<MoviesList> with AutomaticKeepAliveClientMi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return RefreshIndicator(
       notificationPredicate: (_) => widget.pullToRefresh,
       onRefresh: _onListRefresh,
@@ -114,13 +114,13 @@ class _MoviesListState extends State<MoviesList> with AutomaticKeepAliveClientMi
     return currentScroll >= (maxScroll * 0.9);
   }
 
-  void _scrollToTop() {
-    _scrollController.animateTo(
-        _scrollController.position.minScrollExtent,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.fastOutSlowIn
-    );
-  }
+  // void _scrollToTop() {
+  //   _scrollController.animateTo(
+  //       _scrollController.position.minScrollExtent,
+  //       duration: const Duration(milliseconds: 400),
+  //       curve: Curves.fastOutSlowIn
+  //   );
+  // }
 
   Future<void> _onListRefresh() async {
     BlocProvider.of<MoviesBloc>(context).add(MoviesRefresh());
