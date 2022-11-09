@@ -7,6 +7,7 @@ import '../../models/genre.dart';
 import '../../models/movie.dart';
 import '../../models/movie_detail.dart';
 
+/// Interface for general Data provider
 abstract class DataProvider {
   Future<List<Movie>?> getMovies(int page);
   Future<List<Genre>?> getGenres();

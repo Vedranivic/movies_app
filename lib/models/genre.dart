@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 
 part 'genre.g.dart';
 
+/// Genre data model
 @HiveType(typeId: 1)
 class Genre with EquatableMixin, HiveObjectMixin {
   @HiveField(0)
@@ -23,9 +24,9 @@ class Genre with EquatableMixin, HiveObjectMixin {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 

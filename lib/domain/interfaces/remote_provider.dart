@@ -5,6 +5,7 @@
 
 import 'data_provider.dart';
 
+/// Remote provider specific data interface
 abstract class RemoteProvider extends DataProvider {
 
 }

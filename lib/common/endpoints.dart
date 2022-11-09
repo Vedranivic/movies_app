@@ -2,6 +2,7 @@
  * Copyright (c) 2022 Vedran Ivić. All rights reserved.
  * This file is part of movies_app Flutter application project.
  */
+/// Endpoint constants (base url, API specifics etc.)
 
 const String tmdbApiBaseUrl = "https://api.themoviedb.org/3";
 const String tmdbImageBaseUrl = "https://image.tmdb.org/t/p/w500";

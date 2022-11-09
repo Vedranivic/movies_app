@@ -15,6 +15,7 @@ import '../../models/movie.dart';
 part 'favourites_event.dart';
 part 'favourites_state.dart';
 
+/// BLoC component for Favourites View
 class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
   final MoviesRepository _moviesRepository;
   final _logger = FimberLog((FavouritesBloc).toString());
@@ -22,7 +23,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
   FavouritesBloc({required MoviesRepository moviesRepository})
       : _moviesRepository = moviesRepository, super(FavouritesInitial()) {
     on<FavouritesFetchRequested>(_handleFavouritesFetch);
-    on<FavouritesUpdate>(_addFavourite);
+    on<FavouritesUpdate>(_toggleFavourite);
   }
 
   FutureOr<void> _handleFavouritesFetch(FavouritesFetchRequested event, Emitter<FavouritesState> emit) {
@@ -34,7 +35,7 @@ class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
     }
   }
 
-  FutureOr<void> _addFavourite(FavouritesUpdate event, Emitter<FavouritesState> emit) {
+  FutureOr<void> _toggleFavourite(FavouritesUpdate event, Emitter<FavouritesState> emit) {
     try {
       _moviesRepository.toggleFavourite(event.movieId, event.isFavourite);
     } catch (e) {

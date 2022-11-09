@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/connectivity/connectivity_bloc.dart';
 import '../../common/colors.dart';
 
+/// Custom offline status (no connectivity) indicator widget
 class OfflineNotificationIcon extends StatelessWidget {
   const OfflineNotificationIcon({
     Key? key,

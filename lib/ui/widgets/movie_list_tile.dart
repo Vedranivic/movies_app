@@ -17,6 +17,7 @@ import '../screens/details/movie_details.dart';
 import 'animate_page_route.dart';
 import 'movie_rating.dart';
 
+/// List Tile/Item widget used for building every item in movie list and populated with [Movie] data
 class MovieListTile extends StatefulWidget {
   const MovieListTile(this.movie, {Key? key}) : super(key: key);
   final Movie movie;

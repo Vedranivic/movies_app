@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 
+/// Custom Page Route with [SlideTransition] transition animation
 class AnimatedPageRoute<T> extends PageRouteBuilder<T> {
   AnimatedPageRoute({ required Widget Function(BuildContext) builder})
       : super(

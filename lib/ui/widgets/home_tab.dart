@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../common/styles.dart';
 
+/// Customization of the [Tab] widget
 class HomeTab extends StatelessWidget {
   final String label;
   final Icon icon;

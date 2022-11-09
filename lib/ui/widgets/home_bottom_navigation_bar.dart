@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../common/colors.dart';
 import 'home_tab.dart';
 
+/// Custom implementation of the [Scaffold.bottomNavigationBar] widget
 class HomeBottomNavigationBar extends StatelessWidget {
   const HomeBottomNavigationBar({
     Key? key,

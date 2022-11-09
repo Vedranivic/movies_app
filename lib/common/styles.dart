@@ -5,6 +5,8 @@
 
 import 'package:flutter/cupertino.dart';
 
+/// TextStyles withing the app
+
 const TextStyle titleTextStyle = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 22,

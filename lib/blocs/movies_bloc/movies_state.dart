@@ -27,18 +27,21 @@ class MoviesFetchSuccess extends MoviesState {
   List<Object> get props => [identityHashCode(movies), hasReachedMaxPage];
 }
 
-class MoviesFetchFailure extends MoviesState {
+class MoviesFailure extends MoviesState {
   final String message;
 
-  const MoviesFetchFailure(this.message);
+  const MoviesFailure(this.message);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [identityHashCode(this)];
 }
 
-// class MoviesScrollToTop extends MoviesState {
-//   @override
-//   List<Object> get props => [];
-// }
+class MoviesFetchFailure extends MoviesFailure {
+  final List<Movie> movies;
 
+  const MoviesFetchFailure(String message, this.movies): super(message);
+
+  @override
+  List<Object> get props => [identityHashCode(this)];
+}
 

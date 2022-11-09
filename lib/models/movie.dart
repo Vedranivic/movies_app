@@ -10,6 +10,7 @@ import 'genre.dart';
 
 part 'movie.g.dart';
 
+/// Movie data model
 @HiveType(typeId: 2)
 class Movie with EquatableMixin, HiveObjectMixin{
   @HiveField(0)

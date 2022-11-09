@@ -11,6 +11,7 @@ import '../../../../common/styles.dart';
 import '../../../../models/movie.dart';
 import '../../../widgets/movies_list.dart';
 
+/// Favourites View for displaying a [MovieList] of favourite movies from local provider
 class FavouritesTabView extends StatefulWidget {
   const FavouritesTabView({Key? key,}) : super(key: key);
 

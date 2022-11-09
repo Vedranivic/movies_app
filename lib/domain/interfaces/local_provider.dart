@@ -7,6 +7,7 @@ import '../../models/genre.dart';
 import '../../models/movie.dart';
 import 'data_provider.dart';
 
+/// Local provider data specific interface
 abstract class LocalProvider extends DataProvider {
   void storeGenres(List<Genre> genres);
   Future<void> storeMovies(List<Movie> movies);
